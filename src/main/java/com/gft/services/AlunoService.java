@@ -1,24 +1,25 @@
 package com.gft.services;
 
-import com.gft.entities.Aluno;
-import com.gft.repositories.AlunoRepository;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.gft.entities.Aluno;
+import com.gft.repositories.AlunoRepository;
 
 @Service
 public class AlunoService {
 
     private AlunoRepository alunoRepository;
 
-
     public AlunoService(AlunoRepository alunoRepository) {
         this.alunoRepository = alunoRepository;
     }
 
-    public void salvarAluno(Aluno aluno) {
-        alunoRepository.save(aluno);
+    public Aluno salvarAluno(Aluno aluno) {
+        return alunoRepository.save(aluno);
     }
 
     public Aluno buscarAluno(Long id) throws Exception {
@@ -29,21 +30,22 @@ public class AlunoService {
         return aluno.get();
     }
 
-    public List<Aluno> buscarAlunosPorNome(String nome) throws Exception {
+    public Page<Aluno> buscarAlunosPorNome(Pageable page, String nome) throws Exception {
+        Page<Aluno> alunos = alunoRepository.findAllByNome(page, nome);
 
-        List<Aluno> aluno = alunoRepository.findAllByName(nome);
-
-        if (aluno.isEmpty()) {
+        if (alunos.isEmpty()) {
             throw new Exception("Nenhum Aluno encontrado");
         }
-        return aluno;
+        return alunos;
     }
 
-    public List<Aluno> listarAlunos() {
-        return alunoRepository.findAll();
+    public Page<Aluno> listarAlunos(Pageable page) {
+        return alunoRepository.findAll(page);
     }
 
-    public void deletarAluno(Long id) {
-        alunoRepository.deleteById(id);
+    public void deletarAluno(Long id) throws Exception {
+        Aluno aluno = this.buscarAluno(id);
+
+        alunoRepository.delete(aluno);
     }
 }

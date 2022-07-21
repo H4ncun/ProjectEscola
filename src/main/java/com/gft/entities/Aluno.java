@@ -13,8 +13,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "tb_aluno")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Aluno {
