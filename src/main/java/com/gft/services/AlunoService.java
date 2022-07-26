@@ -48,4 +48,13 @@ public class AlunoService {
 
         alunoRepository.delete(aluno);
     }
+
+    public Aluno atualizarAluno(Aluno aluno, Long id) throws Exception {
+
+        Aluno alunoAntigo = this.buscarAluno(id);
+
+        aluno.setId(alunoAntigo.getId());
+
+        return alunoRepository.save(aluno);
+    }
 }

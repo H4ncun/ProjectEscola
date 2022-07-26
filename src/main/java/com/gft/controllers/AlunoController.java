@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,8 @@ import com.gft.dtos.AlunoDTO.AlunoRequest;
 import com.gft.dtos.AlunoDTO.AlunoResponse;
 import com.gft.entities.Aluno;
 import com.gft.services.AlunoService;
+
+import net.bytebuddy.asm.MemberSubstitution.Substitution.Chain.Step.Resolution;
 
 @RestController
 @RequestMapping("v1/aluno")
@@ -73,4 +76,17 @@ public class AlunoController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<AlunoResponse> atualizarAluno(@RequestBody AlunoRequest dto, @PathVariable Long id) {
+
+        Aluno aluno;
+        try {
+            aluno = alunoService.atualizarAluno(AlunoMapper.fromDTO(dto), id);
+            return ResponseEntity.ok(AlunoMapper.fromEntity(aluno));
+        } catch (Exception e) {
+
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }

@@ -1,5 +1,7 @@
 package com.gft.dtos.AlunoDTO;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AlunoResponse {
 
-    private Long id;
+    @NotBlank
     private String nome;
+    @NotBlank
     private String email;
+    @NotBlank
     private String cpf;
 }

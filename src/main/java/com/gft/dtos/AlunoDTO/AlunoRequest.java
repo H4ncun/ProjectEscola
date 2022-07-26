@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AlunoRequest {
 
+    private Long id;
     private String nome;
     private String email;
     private String cpf;
