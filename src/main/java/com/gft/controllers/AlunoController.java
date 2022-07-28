@@ -24,14 +24,12 @@ import com.gft.dtos.AlunoDTO.AlunoResponse;
 import com.gft.entities.Aluno;
 import com.gft.services.AlunoService;
 
-import net.bytebuddy.asm.MemberSubstitution.Substitution.Chain.Step.Resolution;
-
 @RestController
 @RequestMapping("v1/aluno")
 
 public class AlunoController {
 
-    private AlunoService alunoService;
+    private final AlunoService alunoService;
 
     public AlunoController(AlunoService alunoService) {
         this.alunoService = alunoService;
